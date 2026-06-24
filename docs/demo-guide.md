@@ -7,7 +7,7 @@ This guide walks through the local demo flow for the telemetry monitoring system
 ```bash
 python -m venv .venv
 . .venv/Scripts/activate
-pip install -r requirements.txt
+pip install -e ".[dev]"
 ```
 
 ## 2. Seed demo data
@@ -40,6 +40,7 @@ GET /api/v1/summary
 GET /api/v1/devices
 GET /api/v1/telemetry/latest
 GET /api/v1/alerts
+GET /api/v1/telemetry/history/node-001
 ```
 
 ## 5. Open dashboard
@@ -52,6 +53,14 @@ src/telemetry_monitor/dashboard/index.html
 
 The dashboard expects the API to be running at `http://127.0.0.1:8000`.
 
+## Makefile option
+
+```bash
+make install
+make seed
+make run-api
+```
+
 ## Demo checklist
 
 - API health check returns `ok`
@@ -59,3 +68,4 @@ The dashboard expects the API to be running at `http://127.0.0.1:8000`.
 - Devices endpoint shows normal, warning, or critical statuses
 - Alerts endpoint shows generated warning or critical records
 - Dashboard loads summary cards and status tables
+- API integration tests pass with `make test`
