@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Telemetry Monitor</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <p class="eyebrow">Embedded Telemetry Monitoring System</p>
+      <h1>Device Fleet Health Dashboard</h1>
+      <p>Local dashboard concept for viewing simulated telemetry readings, device states, and alert trends.</p>
+    </section>
+
+    <section class="cards">
+      <article class="card">
+        <span>Total Devices</span>
+        <strong id="total-devices">--</strong>
+      </article>
+      <article class="card">
+        <span>Active Alerts</span>
+        <strong id="active-alerts">--</strong>
+      </article>
+      <article class="card">
+        <span>Latest Health</span>
+        <strong id="latest-health">--</strong>
+      </article>
+    </section>
+
+    <section class="panel">
+      <h2>Latest Readings</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Device</th>
+            <th>Subsystem</th>
+            <th>Status</th>
+            <th>Health</th>
+            <th>Battery</th>
+            <th>Signal</th>
+          </tr>
+        </thead>
+        <tbody id="readings-body">
+          <tr><td colspan="6">Run the API and connect this dashboard to live data.</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
