@@ -12,6 +12,10 @@ class TelemetryRepository:
     def __init__(self, connection: sqlite3.Connection) -> None:
         self.connection = connection
 
+    def ping(self) -> bool:
+        self.connection.execute("SELECT 1").fetchone()
+        return True
+
     def upsert_device(self, device: Device) -> None:
         self.connection.execute(
             """
