@@ -56,7 +56,7 @@ docs/           architecture and API documentation
 ```bash
 python -m venv .venv
 . .venv/Scripts/activate
-pip install -r requirements.txt
+pip install -e ".[dev]"
 python scripts/seed_demo_data.py
 uvicorn telemetry_monitor.api.app:app --reload
 ```
