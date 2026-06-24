@@ -1,13 +1,22 @@
-from fastapi import Depends, FastAPI, HTTPException, Query
+from time import perf_counter
+import logging
+
+from fastapi import Depends, FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, ConfigDict
 
+from telemetry_monitor.core.config import get_settings
+from telemetry_monitor.core.logging_config import configure_logging
 from telemetry_monitor.models.telemetry import TelemetryReading
 from telemetry_monitor.services.classifier import classify_reading
 from telemetry_monitor.storage.database import connect, initialize_database
 from telemetry_monitor.storage.repository import TelemetryRepository
 
-app = FastAPI(title="Embedded Telemetry Monitoring System", version="0.2.0")
+settings = get_settings()
+configure_logging(settings.log_level)
+logger = logging.getLogger("telemetry_monitor.api")
+
+app = FastAPI(title=settings.app_name, version=settings.app_version)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -15,6 +24,22 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    start = perf_counter()
+    response = await call_next(request)
+    duration_ms = round((perf_counter() - start) * 1000, 2)
+    logger.info(
+        "request method=%s path=%s status=%s duration_ms=%s",
+        request.method,
+        request.url.path,
+        response.status_code,
+        duration_ms,
+    )
+    response.headers["X-Process-Time-ms"] = str(duration_ms)
+    return response
 
 
 class BatchTelemetryRequest(BaseModel):
@@ -47,14 +72,34 @@ class BatchTelemetryRequest(BaseModel):
 
 
 def get_repository() -> TelemetryRepository:
-    connection = connect()
+    connection = connect(settings.database_path)
     initialize_database(connection)
     return TelemetryRepository(connection)
 
 
+@app.on_event("startup")
+def startup_event() -> None:
+    logger.info("starting service=%s version=%s env=%s", settings.app_name, settings.app_version, settings.environment)
+
+
 @app.get("/health")
 def health() -> dict:
-    return {"status": "ok", "service": "telemetry-monitor", "version": "0.2.0"}
+    return {"status": "ok", "service": "telemetry-monitor", "version": settings.app_version}
+
+
+@app.get("/ready")
+def ready(repository: TelemetryRepository = Depends(get_repository)) -> dict:
+    repository.ping()
+    return {"status": "ready", "database": "ok"}
+
+
+@app.get("/version")
+def version() -> dict:
+    return {
+        "service": "telemetry-monitor",
+        "version": settings.app_version,
+        "environment": settings.environment,
+    }
 
 
 @app.post("/api/v1/telemetry")
