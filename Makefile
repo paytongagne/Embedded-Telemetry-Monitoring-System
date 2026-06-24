@@ -6,7 +6,7 @@ PYTHONPATH_VALUE = src
 
 install:
 	$(PYTHON) -m pip install --upgrade pip
-	$(PYTHON) -m pip install -r requirements.txt
+	$(PYTHON) -m pip install -e ".[dev]"
 
 test:
 	PYTHONPATH=$(PYTHONPATH_VALUE) $(PYTHON) -m pytest
