@@ -1,4 +1,5 @@
 from fastapi import Depends, FastAPI, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from telemetry_monitor.models.telemetry import TelemetryReading
@@ -7,6 +8,13 @@ from telemetry_monitor.storage.database import connect, initialize_database
 from telemetry_monitor.storage.repository import TelemetryRepository
 
 app = FastAPI(title="Embedded Telemetry Monitoring System", version="0.2.0")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 class BatchTelemetryRequest(BaseModel):
