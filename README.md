@@ -73,13 +73,20 @@ The dashboard shell is located at:
 src/telemetry_monitor/dashboard/index.html
 ```
 
-## API Demo Screenshot
+## API Demo Captures
 
-The FastAPI health endpoint returns the current service status and version.
+The local FastAPI demo has been tested with successful responses for:
 
-![Health endpoint screenshot](docs/assets/screenshots/api-health.svg)
+| Endpoint | What it shows |
+|---|---|
+| `GET /health` | Service status and version |
+| `GET /api/v1/devices` | Device summaries, latest status, health score, and alert count |
+| `GET /api/v1/telemetry/latest` | Recent classified telemetry readings |
+| `GET /api/v1/alerts` | Active warning and critical alerts |
+| `PATCH /api/v1/alerts/{alert_id}/resolve` | Alert resolution workflow |
+| `GET /api/v1/summary` | Fleet-level counts for devices, alerts, and stored readings |
 
-Additional API screenshots and capture notes are tracked in [Demo Screenshots](docs/screenshots.md).
+Screenshot notes and recommended filenames are tracked in [Demo Screenshots](docs/screenshots.md).
 
 ## Makefile Workflow
 
@@ -107,6 +114,7 @@ http://127.0.0.1:8000/docs
 ```json
 {
   "device_id": "node-001",
+  "timestamp": "2026-06-24T03:05:00Z",
   "subsystem": "power",
   "temperature_c": 42.5,
   "voltage_v": 3.8,
