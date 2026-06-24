@@ -31,13 +31,28 @@ CREATE TABLE IF NOT EXISTS telemetry_readings (
 CREATE TABLE IF NOT EXISTS alerts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     device_id TEXT NOT NULL,
+    reading_id INTEGER,
     severity TEXT NOT NULL,
     metric TEXT NOT NULL,
     message TEXT NOT NULL,
     created_at TEXT NOT NULL,
     resolved_at TEXT,
-    is_resolved INTEGER NOT NULL DEFAULT 0
+    is_resolved INTEGER NOT NULL DEFAULT 0,
+    FOREIGN KEY (device_id) REFERENCES devices(device_id),
+    FOREIGN KEY (reading_id) REFERENCES telemetry_readings(id)
+);
+
+CREATE TABLE IF NOT EXISTS ingestion_events (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    source TEXT NOT NULL,
+    payload_count INTEGER NOT NULL,
+    accepted_count INTEGER NOT NULL,
+    rejected_count INTEGER NOT NULL,
+    notes TEXT,
+    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE INDEX IF NOT EXISTS idx_readings_device_time ON telemetry_readings(device_id, timestamp);
+CREATE INDEX IF NOT EXISTS idx_readings_status ON telemetry_readings(status);
 CREATE INDEX IF NOT EXISTS idx_alerts_device_active ON alerts(device_id, is_resolved);
+CREATE INDEX IF NOT EXISTS idx_alerts_severity ON alerts(severity, is_resolved);
