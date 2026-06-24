@@ -45,6 +45,8 @@ def test_api_ingestion_summary_and_alert_flow(tmp_path):
     }
 
     assert client.get("/health").status_code == 200
+    assert client.get("/ready").json()["database"] == "ok"
+    assert client.get("/version").json()["service"] == "telemetry-monitor"
 
     normal_response = client.post("/api/v1/telemetry", json=normal_payload)
     assert normal_response.status_code == 200
