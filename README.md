@@ -12,11 +12,15 @@ The system is structured around backend service design, database persistence, AP
 - SQLite schema for devices, telemetry readings, alerts, and ingestion events
 - Repository layer for storing and querying telemetry data
 - FastAPI endpoints for telemetry ingestion, batch ingestion, device summaries, alerts, history, and fleet summaries
+- Health, readiness, and version endpoints
+- Request timing header and request logging middleware
+- Environment-based runtime configuration
+- SQLite foreign key enforcement, busy timeout, and optional WAL mode
 - Local dashboard for viewing device status, recent readings, and active alerts
 - Unit and API integration tests
 - Makefile commands for local development
 - Docker and Docker Compose support
-- Architecture, API, database, deployment, and demo documentation
+- Architecture, API, database, deployment, demo, and production-readiness documentation
 
 ## System Flow
 
@@ -29,6 +33,7 @@ Device Simulator -> Telemetry Model -> Health Classifier -> SQLite Storage -> Fa
 - Python 3.11+
 - FastAPI
 - Pydantic
+- Pydantic Settings
 - SQLite
 - Pytest
 - Ruff
@@ -40,7 +45,7 @@ Device Simulator -> Telemetry Model -> Health Classifier -> SQLite Storage -> Fa
 ```text
 src/telemetry_monitor/
   api/          FastAPI app
-  core/         shared status definitions
+  core/         configuration, status definitions, and logging setup
   models/       telemetry, device, and alert models
   services/     simulator and classification logic
   storage/      SQLite schema and repository layer
@@ -73,13 +78,28 @@ The dashboard shell is located at:
 src/telemetry_monitor/dashboard/index.html
 ```
 
+## Runtime Configuration
+
+Copy `.env.example` to `.env` and adjust values as needed.
+
+```text
+APP_ENV=local
+DATABASE_PATH=data/telemetry.db
+LOG_LEVEL=INFO
+ENABLE_SQLITE_WAL=true
+API_HOST=127.0.0.1
+API_PORT=8000
+```
+
 ## API Demo Captures
 
 The local FastAPI demo has been tested with successful responses for:
 
 | Endpoint | What it shows |
 |---|---|
-| `GET /health` | Service status and version |
+| `GET /health` | Service process status and version |
+| `GET /ready` | Database readiness check |
+| `GET /version` | Service version and runtime environment |
 | `GET /api/v1/devices` | Device summaries, latest status, health score, and alert count |
 | `GET /api/v1/telemetry/latest` | Recent classified telemetry readings |
 | `GET /api/v1/alerts` | Active warning and critical alerts |
@@ -131,6 +151,8 @@ http://127.0.0.1:8000/docs
 | Method | Endpoint | Purpose |
 |---|---|---|
 | GET | `/health` | Service health check |
+| GET | `/ready` | Database readiness check |
+| GET | `/version` | Service version and runtime metadata |
 | POST | `/api/v1/telemetry` | Submit one telemetry reading |
 | POST | `/api/v1/telemetry/batch` | Submit a batch of telemetry readings |
 | GET | `/api/v1/devices` | List device status summaries |
@@ -146,6 +168,8 @@ http://127.0.0.1:8000/docs
 - Add MQTT-style ingestion service
 - Add PostgreSQL option
 - Add ESP32 payload example
+- Add API key protection for write endpoints
+- Add structured JSON logs and metrics counters
 
 ## Documentation
 
@@ -156,3 +180,4 @@ http://127.0.0.1:8000/docs
 - [Demo Guide](docs/demo-guide.md)
 - [Demo Captures](docs/screenshots.md)
 - [System Design](docs/system-design.md)
+- [Production Readiness](docs/production-readiness.md)
