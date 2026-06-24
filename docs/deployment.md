@@ -6,6 +6,7 @@
 python -m venv .venv
 . .venv/Scripts/activate
 pip install -r requirements.txt
+python scripts/seed_demo_data.py
 uvicorn telemetry_monitor.api.app:app --reload
 ```
 
@@ -15,25 +16,48 @@ Open the generated API docs at:
 http://127.0.0.1:8000/docs
 ```
 
-## Data Storage
+## Makefile Workflow
 
-The first version uses a local SQLite database named `telemetry.db`. The database is created automatically when the API starts and the repository initializes the schema.
-
-## Environment Plan
-
-Future versions should move runtime settings into environment variables:
-
-```text
-TELEMETRY_DATABASE_PATH=telemetry.db
-TELEMETRY_API_HOST=127.0.0.1
-TELEMETRY_API_PORT=8000
+```bash
+make install
+make test
+make seed
+make run-api
 ```
 
-## Future Docker Plan
+The Makefile uses the `src` package layout and starts the FastAPI app with the local database in `data/telemetry.db`.
 
-The next deployment upgrade should include:
+## Dashboard
 
-- API container
-- database container
-- optional MQTT broker container
-- mounted sample data volume
+Start the API, seed demo data, then open:
+
+```text
+src/telemetry_monitor/dashboard/index.html
+```
+
+The dashboard calls the local API at `http://127.0.0.1:8000` and displays fleet summary cards, device status rows, latest readings, and active alerts.
+
+## Docker Run
+
+```bash
+docker compose up --build
+```
+
+Then open:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+The Docker Compose service mounts a persistent local volume for SQLite data.
+
+## Data Storage
+
+The first version uses SQLite. The database is created automatically in `data/telemetry.db` when the API starts or demo data is seeded.
+
+## Future Deployment Upgrades
+
+- Add PostgreSQL as an optional storage backend
+- Add MQTT broker service for publish/subscribe ingestion
+- Add dashboard static hosting container
+- Add production logging configuration
