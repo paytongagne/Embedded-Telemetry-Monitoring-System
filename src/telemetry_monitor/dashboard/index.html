@@ -11,7 +11,8 @@
     <section class="hero">
       <p class="eyebrow">Embedded Telemetry Monitoring System</p>
       <h1>Device Fleet Health Dashboard</h1>
-      <p>Local dashboard concept for viewing simulated telemetry readings, device states, and alert trends.</p>
+      <p>Dashboard concept for viewing simulated telemetry, device states, alert activity, and fleet-level health summaries.</p>
+      <div id="connection-status" class="status-banner">Connecting to API...</div>
     </section>
 
     <section class="cards">
@@ -20,17 +21,43 @@
         <strong id="total-devices">--</strong>
       </article>
       <article class="card">
+        <span>Warning Devices</span>
+        <strong id="warning-devices">--</strong>
+      </article>
+      <article class="card">
+        <span>Critical Devices</span>
+        <strong id="critical-devices">--</strong>
+      </article>
+      <article class="card">
         <span>Active Alerts</span>
         <strong id="active-alerts">--</strong>
       </article>
       <article class="card">
-        <span>Latest Health</span>
-        <strong id="latest-health">--</strong>
+        <span>Readings Stored</span>
+        <strong id="readings-stored">--</strong>
       </article>
     </section>
 
     <section class="panel">
-      <h2>Latest Readings</h2>
+      <h2>Device Status</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Device</th>
+            <th>Status</th>
+            <th>Health Score</th>
+            <th>Active Alerts</th>
+            <th>Last Seen</th>
+          </tr>
+        </thead>
+        <tbody id="devices-body">
+          <tr><td colspan="5">Loading devices...</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="panel">
+      <h2>Latest Telemetry</h2>
       <table>
         <thead>
           <tr>
@@ -43,7 +70,25 @@
           </tr>
         </thead>
         <tbody id="readings-body">
-          <tr><td colspan="6">Run the API and connect this dashboard to live data.</td></tr>
+          <tr><td colspan="6">Loading readings...</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="panel">
+      <h2>Active Alerts</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Severity</th>
+            <th>Device</th>
+            <th>Metric</th>
+            <th>Message</th>
+            <th>Created</th>
+          </tr>
+        </thead>
+        <tbody id="alerts-body">
+          <tr><td colspan="5">Loading alerts...</td></tr>
         </tbody>
       </table>
     </section>
