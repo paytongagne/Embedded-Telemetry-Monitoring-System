@@ -1,6 +1,6 @@
 from fastapi import Depends, FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from telemetry_monitor.models.telemetry import TelemetryReading
 from telemetry_monitor.services.classifier import classify_reading
@@ -18,6 +18,30 @@ app.add_middleware(
 
 
 class BatchTelemetryRequest(BaseModel):
+    model_config = ConfigDict(
+        json_schema_extra={
+            "examples": [
+                {
+                    "source": "api-batch",
+                    "readings": [
+                        {
+                            "device_id": "node-008",
+                            "timestamp": "2026-06-24T03:10:00Z",
+                            "subsystem": "thermal",
+                            "temperature_c": 67.2,
+                            "voltage_v": 3.42,
+                            "battery_percent": 31.5,
+                            "signal_dbm": -82.0,
+                            "memory_usage_percent": 76.0,
+                            "uptime_seconds": 18500,
+                            "packet_sequence": 41,
+                        }
+                    ],
+                }
+            ]
+        }
+    )
+
     readings: list[TelemetryReading]
     source: str = "api-batch"
 
