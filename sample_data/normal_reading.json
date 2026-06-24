@@ -1,0 +1,12 @@
+{
+  "device_id": "node-001",
+  "timestamp": "2026-06-23T21:30:00Z",
+  "subsystem": "power",
+  "temperature_c": 38.4,
+  "voltage_v": 3.82,
+  "battery_percent": 84.5,
+  "signal_dbm": -61.0,
+  "memory_usage_percent": 42.0,
+  "uptime_seconds": 18400,
+  "packet_sequence": 101
+}
