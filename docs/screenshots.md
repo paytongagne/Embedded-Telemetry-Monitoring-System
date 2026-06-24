@@ -1,30 +1,22 @@
 # Demo Screenshots
 
-This page collects the clean screenshots used to show the local FastAPI demo. The screenshots focus on successful endpoints and system behavior instead of default validation-error examples.
+This page tracks the clean screenshots used to show the local FastAPI demo. The screenshots should focus on successful endpoints and system behavior instead of default validation-error examples.
 
-## Health Check
-
-The health endpoint confirms that the API service is running and returning the current service version.
-
-![Health endpoint](assets/screenshots/api-health.svg)
-
-## Screenshot Set to Add
-
-The following screenshots were reviewed and are the best ones to include in the repository:
+## Current Screenshot Status
 
 | Screenshot | Purpose | Status |
 |---|---|---|
-| `api-health.svg` | Shows `/health` returning `200 OK` with service status | Added |
-| `api-devices.png` | Shows `/api/v1/devices` returning device health summaries | Add manually |
-| `api-latest-telemetry.png` | Shows `/api/v1/telemetry/latest` returning recent classified readings | Add manually |
-| `api-alerts.png` | Shows `/api/v1/alerts` returning active warning and critical alerts | Add manually |
-| `api-resolve-alert.png` | Shows `PATCH /api/v1/alerts/{alert_id}/resolve` resolving an alert | Add manually |
-| `api-summary.png` | Shows `/api/v1/summary` returning fleet-level counts | Add manually |
-| `api-schema-contract.png` | Shows OpenAPI schema validation fields for telemetry requests | Add manually |
+| `api-health.png` | Shows `/health` returning `200 OK` with service status | Capture manually |
+| `api-devices.png` | Shows `/api/v1/devices` returning device health summaries | Capture manually |
+| `api-latest-telemetry.png` | Shows `/api/v1/telemetry/latest` returning classified readings | Capture manually |
+| `api-alerts.png` | Shows `/api/v1/alerts` returning active warning and critical alerts | Capture manually |
+| `api-resolve-alert.png` | Shows `PATCH /api/v1/alerts/{alert_id}/resolve` resolving an alert | Capture manually |
+| `api-summary.png` | Shows `/api/v1/summary` returning fleet-level counts | Capture manually |
+| `api-schema-contract.png` | Shows OpenAPI schema validation fields for telemetry requests | Capture manually |
 
 ## Recommended File Location
 
-Place all final screenshots in:
+Place final screenshots in:
 
 ```text
 docs/assets/screenshots/
@@ -33,7 +25,7 @@ docs/assets/screenshots/
 Recommended filenames:
 
 ```text
-api-health.svg
+api-health.png
 api-devices.png
 api-latest-telemetry.png
 api-alerts.png
@@ -42,15 +34,29 @@ api-summary.png
 api-schema-contract.png
 ```
 
-## README Usage
+## Recommended README Usage
 
-After the image files are added, the README can reference them like this:
+After the image files are uploaded, the README can reference them like this:
 
 ```markdown
 ![Device endpoint](docs/assets/screenshots/api-devices.png)
 ![Fleet summary endpoint](docs/assets/screenshots/api-summary.png)
 ```
 
+## Capture Guidance
+
+Use screenshots that show a successful `200` response when possible. The best screenshots from the current demo are:
+
+- `GET /health`
+- `GET /api/v1/devices`
+- `GET /api/v1/telemetry/latest`
+- `GET /api/v1/alerts`
+- `PATCH /api/v1/alerts/{alert_id}/resolve`
+- `GET /api/v1/summary`
+- OpenAPI schema view for telemetry request fields
+
 ## Notes
 
 Screenshots that show `422 Unprocessable Entity` from the default Swagger request body should not be used as main project images. Those errors are valid validation behavior, but they are not the strongest first impression for the repository.
+
+The old SVG test asset was removed from the README because it rendered as a broken placeholder in GitHub. Use normal PNG screenshots for final repository images.
