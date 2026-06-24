@@ -86,7 +86,7 @@ The local FastAPI demo has been tested with successful responses for:
 | `PATCH /api/v1/alerts/{alert_id}/resolve` | Alert resolution workflow |
 | `GET /api/v1/summary` | Fleet-level counts for devices, alerts, and stored readings |
 
-Screenshot notes and recommended filenames are tracked in [Demo Screenshots](docs/screenshots.md).
+Demo capture documentation is available in [Demo Captures](docs/screenshots.md).
 
 ## Makefile Workflow
 
@@ -145,7 +145,6 @@ http://127.0.0.1:8000/docs
 - Add dashboard charts for telemetry trends
 - Add MQTT-style ingestion service
 - Add PostgreSQL option
-- Add screenshot examples
 - Add ESP32 payload example
 
 ## Documentation
@@ -155,6 +154,5 @@ http://127.0.0.1:8000/docs
 - [Database Schema](docs/database-schema.md)
 - [Deployment](docs/deployment.md)
 - [Demo Guide](docs/demo-guide.md)
-- [Demo Screenshots](docs/screenshots.md)
-- [Screenshot Checklist](docs/screenshot-checklist.md)
+- [Demo Captures](docs/screenshots.md)
 - [System Design](docs/system-design.md)
