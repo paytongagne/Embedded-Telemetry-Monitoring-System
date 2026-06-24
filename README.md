@@ -2,7 +2,7 @@
 
 A Python-based backend system for monitoring simulated embedded-device telemetry. The project models a realistic device data pipeline: simulated readings are validated, classified by health state, stored in SQLite, and exposed through FastAPI endpoints.
 
-The system is structured around backend service design, database persistence, API workflows, automated testing, and embedded-style data modeling.
+The system is structured around backend service design, database persistence, API workflows, automated testing, dashboard integration, and embedded-style data modeling.
 
 ## Features
 
@@ -14,7 +14,9 @@ The system is structured around backend service design, database persistence, AP
 - FastAPI endpoints for telemetry ingestion, batch ingestion, device summaries, alerts, history, and fleet summaries
 - Local dashboard for viewing device status, recent readings, and active alerts
 - Unit and API integration tests
-- Architecture, API, database, and deployment documentation
+- Makefile commands for local development
+- Docker and Docker Compose support
+- Architecture, API, database, deployment, and demo documentation
 
 ## System Flow
 
@@ -30,6 +32,7 @@ Device Simulator -> Telemetry Model -> Health Classifier -> SQLite Storage -> Fa
 - SQLite
 - Pytest
 - Ruff
+- Docker Compose
 - HTML/CSS/JavaScript dashboard
 
 ## Project Structure
@@ -70,6 +73,27 @@ The dashboard shell is located at:
 src/telemetry_monitor/dashboard/index.html
 ```
 
+## Makefile Workflow
+
+```bash
+make install
+make test
+make seed
+make run-api
+```
+
+## Docker Run
+
+```bash
+docker compose up --build
+```
+
+Then open:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
 ## Example Telemetry Payload
 
 ```json
@@ -104,7 +128,6 @@ src/telemetry_monitor/dashboard/index.html
 
 - Add dashboard charts for telemetry trends
 - Add MQTT-style ingestion service
-- Add Docker Compose setup
 - Add PostgreSQL option
 - Add screenshot examples
 - Add ESP32 payload example
@@ -115,4 +138,6 @@ src/telemetry_monitor/dashboard/index.html
 - [API Reference](docs/api-reference.md)
 - [Database Schema](docs/database-schema.md)
 - [Deployment](docs/deployment.md)
+- [Demo Guide](docs/demo-guide.md)
+- [Screenshot Checklist](docs/screenshot-checklist.md)
 - [System Design](docs/system-design.md)
