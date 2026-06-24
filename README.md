@@ -73,6 +73,14 @@ The dashboard shell is located at:
 src/telemetry_monitor/dashboard/index.html
 ```
 
+## API Demo Screenshot
+
+The FastAPI health endpoint returns the current service status and version.
+
+![Health endpoint screenshot](docs/assets/screenshots/api-health.svg)
+
+Additional API screenshots and capture notes are tracked in [Demo Screenshots](docs/screenshots.md).
+
 ## Makefile Workflow
 
 ```bash
@@ -139,5 +147,6 @@ http://127.0.0.1:8000/docs
 - [Database Schema](docs/database-schema.md)
 - [Deployment](docs/deployment.md)
 - [Demo Guide](docs/demo-guide.md)
+- [Demo Screenshots](docs/screenshots.md)
 - [Screenshot Checklist](docs/screenshot-checklist.md)
 - [System Design](docs/system-design.md)
