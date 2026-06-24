@@ -1,0 +1,13 @@
+services:
+  telemetry-api:
+    build: .
+    container_name: telemetry-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - telemetry-data:/app/data
+    environment:
+      - PYTHONPATH=/app/src
+
+volumes:
+  telemetry-data:
